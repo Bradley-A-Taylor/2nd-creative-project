@@ -1,6 +1,5 @@
-# 2nd-creative-project
-CS 260 Web Design
-2nd Creative Project
+# Second Creative Project
+### CS 260 Web Design
 
 a simple recipie search website
 by bradley taylor
