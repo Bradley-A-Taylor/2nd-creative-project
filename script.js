@@ -181,12 +181,7 @@ function loadIngredientSearch(){
             ingredientSearch(value);
         }
     })
-    document.getElementById("add-ingredient").addEventListener("click", function(event){
-        event.preventDefault();
-        value = document.getElementById("ingredient-input").value;
-        document.getElementById("ingredient-input").value = "";
-        ingredientSearch(value);
-    })
+    document.getElementById("add-ingredient").addEventListener("click", function(event){addIngredient()})
     document.getElementById("search").style.height = "auto"
 }
 
