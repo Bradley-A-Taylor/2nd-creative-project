@@ -5,11 +5,12 @@ function populateResult(json){
     for(i = 0; i < json.number; i++){
         recipie = document.createElement("div");
         recipie.setAttribute("class", "recipie-item");
+        recipie.setAttribute("id", json.results[i].id);
+
 
         image = document.createElement("img");
         image.setAttribute("class", "recipie-pic");
         image.setAttribute("src", (json.baseUri + json.results[i].image));
-        image.setAttribute("id", json.results[i].id);
         recipie.appendChild(image);
 
         title = document.createElement("h4");
@@ -36,6 +37,7 @@ function populateResult(json){
             showRecipie(event.currentTarget.getAttribute("id"));
         });
     }
+    document.getElementById("result").style.backgroundColor = "white";
 }
 
 function showRecipie(id){
