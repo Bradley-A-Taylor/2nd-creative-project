@@ -5,11 +5,11 @@ function populateResult(json){
     for(i = 0; i < json.number; i++){
         recipie = document.createElement("div");
         recipie.setAttribute("class", "recipie-item");
-        recipie.setAttribute("id", json.results[i].id);
 
         image = document.createElement("img");
         image.setAttribute("class", "recipie-pic");
         image.setAttribute("src", (json.baseUri + json.results[i].image));
+        image.setAttribute("id", json.results[i].id);
         recipie.appendChild(image);
 
         title = document.createElement("h4");
@@ -33,13 +33,23 @@ function populateResult(json){
 
         document.getElementById("result").appendChild(recipie);
         document.getElementById(json.results[i].id).addEventListener("click", function(event){
-            showRecipie(json.results[i].id);
+            showRecipie(event.currentTarget.getAttribute("id"));
         });
     }
 }
+
 function showRecipie(id){
-    
+    var url = "https://api.spoonacular.com/recipes/" + id + "/information?apiKey=b271f91eb96e4a92851502a3b90d40a9&includeNutrition=false"
+    var req = new Request(url);
+    fetch(req)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (json) {
+            window.open(json.sourceUrl);
+        })
 }
+
 
 function keywordSearch(value){
     if(value == ""){
@@ -85,7 +95,7 @@ function loadKeywordSearch(){
 
     if(document.getElementById("load-keyword-search").classList.contains("active-button"))
     {
-        keywordSearch();
+        keywordSearch(document.getElementById("keyword-input").value);
         return
     }
     document.getElementById("load-keyword-search").classList.add("active-button");
@@ -105,7 +115,12 @@ function loadKeywordSearch(){
             keywordSearch(value);
         }
     })
-    document.getElementById("search-icon").addEventListener("click", function (event) { keywordSearch() })
+    document.getElementById("search-icon").addEventListener("click", function (event) {
+        event.preventDefault();
+        value = document.getElementById("keyword-input").value
+        document.getElementById("keyword-input").value = "";
+        keywordSearch(value);    
+    })
     document.getElementById("search").style.height = "80px";
 }
 
@@ -138,7 +153,7 @@ function addIngredient(){
 
 function loadIngredientSearch(){
     if (document.getElementById("load-ingredient-search").classList.contains("active-button")) {
-        ingredientSearch();
+        ingredientSearch(document.getElementById("ingredient-input").value);
         return
     }
 
@@ -164,7 +179,12 @@ function loadIngredientSearch(){
             ingredientSearch(value);
         }
     })
-    document.getElementById("add-ingredient").addEventListener("click", function(event){addIngredient()})
+    document.getElementById("add-ingredient").addEventListener("click", function(event){
+        event.preventDefault();
+        value = document.getElementById("ingredient-input").value;
+        document.getElementById("ingredient-input").value = "";
+        ingredientSearch(value);
+    })
     document.getElementById("search").style.height = "auto"
 }
 
